@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAzul"
+    tools:context=".MainActivity">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_logo" />
+
+
+    <EditText
+        android:id="@+id/txt_numerodocumento"
+        android:layout_width="316dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/hint_numerodocumento"
+        android:inputType="textPersonName"
+        android:textColor="@android:color/white"
+        android:textColorHighlight="@color/colorAzulOscuro"
+        android:textColorHint="@color/colorAzulOscuro"
+        android:textColorLink="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/txt_contraseña"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <EditText
+        android:id="@+id/txt_contraseña"
+        android:layout_width="316dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/hint_password"
+        android:inputType="textPassword"
+        android:textColor="@android:color/white"
+        android:textColorHighlight="@color/colorAzulOscuro"
+        android:textColorHint="@color/colorAzulOscuro"
+        android:textColorLink="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/btn_login"
+        app:layout_constraintEnd_toEndOf="@+id/txt_numerodocumento"
+        app:layout_constraintStart_toStartOf="@+id/txt_numerodocumento"
+        app:layout_constraintTop_toBottomOf="@+id/txt_numerodocumento" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="316dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/white"
+        android:text="@string/btn_login"
+        android:textColor="@color/colorAzul"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/txt_contraseña"
+        app:layout_constraintStart_toStartOf="@+id/txt_contraseña"
+        app:layout_constraintTop_toBottomOf="@+id/txt_contraseña" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="casual"
+        android:text="@string/text_logo"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/txt_numerodocumento"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

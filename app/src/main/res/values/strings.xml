@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Seguridadallimiteevaluacion</string>
+    <string name="hint_numerodocumento">Número de documento</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="btn_login">Iniciar sesión</string>
+    <string name="text_logo">Capacitación en alturas</string>
+    <string name="title_activity_dashboard">DashboardActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+</resources>
