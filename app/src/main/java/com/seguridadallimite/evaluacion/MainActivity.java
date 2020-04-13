@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.seguridadallimite.evaluacion.R;
+import com.seguridadallimite.evaluacion.common.Constantes;
+import com.seguridadallimite.evaluacion.common.SharedPeferencesManager;
 import com.seguridadallimite.evaluacion.model.RequestAuth;
 import com.seguridadallimite.evaluacion.model.ResponseAuth;
 import com.seguridadallimite.evaluacion.retrofit.SeguridadServices;
@@ -80,7 +82,14 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
             @Override
             public void onResponse(Call<ResponseAuth> call, Response<ResponseAuth> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(MainActivity.this, "Session iniciada correctamente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Sesión iniciada correctamente", Toast.LENGTH_SHORT).show();
+
+                    SharedPeferencesManager.setSomeStringValue(Constantes.PREF_NUMERO_DOCUMENTO, documento);
+                    SharedPeferencesManager.setSomeStringValue(Constantes.PREF_PERFIL, response.body().getPerfil());
+                    if (response.body().getPerfil().equals("A")) {
+                        SharedPeferencesManager.setSomeStringValue(Constantes.PREF_NOMBRE_APRENDIZ, response.body().getAprendiz().getTrabajador().getPrimernombre());
+                    }
+
                     Intent i = new Intent(MainActivity.this, DashboardActivity.class);
                     startActivity(i);
                     // Destruir activity login

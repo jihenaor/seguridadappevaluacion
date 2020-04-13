@@ -11,5 +11,8 @@ public interface SeguridadServices {
 
     @POST("api/auth")
     Call<ResponseAuth> doLogin(@Body RequestAuth requestAuth);
-
+/*
+    @GET("api/preguntarniveltipoevaluacion//{idnivel}/{tipoevaluacion}")
+    Call<ResponseAuth> doLogin(@Body RequestAuth requestAuth);
+*/
 }
