@@ -25,9 +25,15 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
+    <string name="menu_home">Examen de conocimientos teóricos</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
 
     <string name="home_second">Home Second</string>
+    <string name="title_activity_quiz_aprendiz">QuizAprendizActivity</string>
+    <string name="texto_inicion_Quiz">Pon a prueba tu aprendizaje del componente teórico</string>
+    <string name="quiz_texto1">Este examen tiene 10 preguntas para responder en 30 minutos</string>
+    <string name="quiz_texto2">Este examen puede presentarse hasta dos veces</string>
+    <string name="quiz_texto3">Debe aprobar el 80% de las preguntas</string>
+    <string name="quiz_boton_iniciar_ecamen">Iniciar examen</string>
 </resources>
