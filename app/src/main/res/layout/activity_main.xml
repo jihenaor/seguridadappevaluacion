@@ -26,13 +26,15 @@
         android:ems="10"
         android:hint="@string/hint_numerodocumento"
         android:inputType="textPersonName"
+        android:text="75068189"
         android:textColor="@android:color/white"
         android:textColorHighlight="@color/colorAzulOscuro"
         android:textColorHint="@color/colorAzulOscuro"
         android:textColorLink="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/txt_contraseña"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        tools:text="75068189" />
 
     <EditText
         android:id="@+id/txt_contraseña"
@@ -41,6 +43,7 @@
         android:ems="10"
         android:hint="@string/hint_password"
         android:inputType="textPassword"
+        android:text="1"
         android:textColor="@android:color/white"
         android:textColorHighlight="@color/colorAzulOscuro"
         android:textColorHint="@color/colorAzulOscuro"
@@ -48,7 +51,8 @@
         app:layout_constraintBottom_toTopOf="@+id/btn_login"
         app:layout_constraintEnd_toEndOf="@+id/txt_numerodocumento"
         app:layout_constraintStart_toStartOf="@+id/txt_numerodocumento"
-        app:layout_constraintTop_toBottomOf="@+id/txt_numerodocumento" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_numerodocumento"
+        tools:text="1" />
 
     <Button
         android:id="@+id/btn_login"

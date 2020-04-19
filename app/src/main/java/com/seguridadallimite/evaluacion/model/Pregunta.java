@@ -22,9 +22,15 @@ public class Pregunta {
     @SerializedName("grupo")
     @Expose
     private Grupo grupo;
+
     @SerializedName("idenfasis")
     @Expose
     private Object idenfasis;
+
+    @SerializedName("respuestacorrecta")
+    @Expose
+    private String respuestacorrecta;
+
     @SerializedName("idnivel")
     @Expose
     private Integer idnivel;
@@ -49,8 +55,9 @@ public class Pregunta {
      * @param id
      * @param orden
      * @param pregunta
+     * @param respuestacorrecta
      */
-    public Pregunta(Integer id, String pregunta, Integer numerorespuestacorrecta, Integer orden, Grupo grupo, Object idenfasis, Integer idnivel, List<Respuesta> respuestas) {
+    public Pregunta(Integer id, String pregunta, Integer numerorespuestacorrecta, Integer orden, Grupo grupo, Object idenfasis, Integer idnivel, List<Respuesta> respuestas, String respuestacorrecta) {
         super();
         this.id = id;
         this.pregunta = pregunta;
@@ -60,6 +67,7 @@ public class Pregunta {
         this.idenfasis = idenfasis;
         this.idnivel = idnivel;
         this.respuestas = respuestas;
+        this.respuestacorrecta = respuestacorrecta;
     }
 
     public Integer getId() {
@@ -126,4 +134,11 @@ public class Pregunta {
         this.respuestas = respuestas;
     }
 
+    public String getRespuestacorrecta() {
+        return respuestacorrecta;
+    }
+
+    public void setRespuestacorrecta(String respuestacorrecta) {
+        this.respuestacorrecta = respuestacorrecta;
+    }
 }
