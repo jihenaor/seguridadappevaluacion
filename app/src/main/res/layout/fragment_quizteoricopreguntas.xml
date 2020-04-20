@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".QuizAprendizActivity">
+
+    <Button
+        android:id="@+id/button_xxx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_Label_numeropregunta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Pregunta"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+    <TextView
+        android:id="@+id/txt_contador_pregunta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="1 / 10"
+        app:layout_constraintStart_toEndOf="@+id/txt_Label_numeropregunta"
+        app:layout_constraintTop_toTopOf="@+id/txt_Label_numeropregunta" />
+
+    <TextView
+        android:id="@+id/txt_pregunta"
+        android:layout_width="0dp"
+        android:layout_height="94dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="Pregunta"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txt_Label_numeropregunta"
+        app:layout_constraintTop_toBottomOf="@+id/txt_Label_numeropregunta" />
+
+    <View
+        android:id="@+id/ruler"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="#813e3e3e"
+        app:layout_constraintTop_toBottomOf="@+id/txt_pregunta"
+        tools:layout_editor_absoluteX="-16dp" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:divider="?android:attr/dividerHorizontal"
+        android:showDividers="middle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txt_Label_numeropregunta"
+        app:layout_constraintTop_toBottomOf="@+id/ruler">
+
+        <RadioButton
+            android:id="@+id/rb_respuesta1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RadioButton"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/rb_respuesta2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RadioButton"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/rb_respuesta3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RadioButton"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/rb_respuesta4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RadioButton"
+            android:textSize="18sp" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_continuar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="Continuar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btn_calificar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Calificar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
