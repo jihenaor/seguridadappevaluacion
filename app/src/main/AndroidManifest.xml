@@ -12,7 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".QuizAprendizActivity"></activity>
+        <activity
+            android:name=".QuizteoricoActivity"
+            android:label="@string/title_activity_quizteorico"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".QuizAprendizActivity" />
         <activity
             android:name=".DashboardActivity"
             android:label="@string/title_activity_dashboard"

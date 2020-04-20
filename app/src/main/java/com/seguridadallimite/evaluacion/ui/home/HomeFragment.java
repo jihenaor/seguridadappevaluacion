@@ -14,9 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.seguridadallimite.evaluacion.DashboardActivity;
-import com.seguridadallimite.evaluacion.MainActivity;
-import com.seguridadallimite.evaluacion.QuizAprendizActivity;
+import com.seguridadallimite.evaluacion.QuizteoricoActivity;
 import com.seguridadallimite.evaluacion.R;
 
 public class HomeFragment extends Fragment {
@@ -37,7 +35,7 @@ public class HomeFragment extends Fragment {
         cb_iniciarexamen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent intent = new Intent(getActivity(), QuizAprendizActivity.class);
+                Intent intent = new Intent(getActivity(), QuizteoricoActivity.class);
                 getActivity().startActivity(intent);
             }
         });
