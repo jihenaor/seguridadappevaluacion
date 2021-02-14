@@ -1,21 +1,36 @@
 package com.seguridadallimite.evaluacion;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
-import com.seguridadallimite.evaluacion.dummy.DummyContent;
-import com.seguridadallimite.evaluacion.dummy.DummyContent.DummyItem;
+import com.seguridadallimite.evaluacion.common.Constantes;
+import com.seguridadallimite.evaluacion.common.SharedPeferencesManager;
+import com.seguridadallimite.evaluacion.model.Grupo;
+import com.seguridadallimite.evaluacion.model.Pregunta;
+import com.seguridadallimite.evaluacion.retrofit.SeguridadClient;
+import com.seguridadallimite.evaluacion.retrofit.SeguridadServices;
+import com.seguridadallimite.evaluacion.ui.aprendicesgrupo.AprendicesgrupoActivity;
+import com.seguridadallimite.evaluacion.ui.grupos.GrupoAdapter;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A fragment representing a list of Items.
@@ -25,11 +40,16 @@ import java.util.List;
  */
 public class QuizteoricorespuestaFragment extends Fragment {
 
+    private List<Pregunta> preguntas;
+
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
-    private int mColumnCount = 1;
+
     private OnListFragmentInteractionListener mListener;
+    QuizteoricorespuestaRecyclerViewAdapter adapterRespuestas;
+
+    RecyclerView recyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -52,9 +72,6 @@ public class QuizteoricorespuestaFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     @Override
@@ -65,13 +82,12 @@ public class QuizteoricorespuestaFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new MyQuizteoricorespuestaRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView = (RecyclerView) view;
+
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+            adapterRespuestas = new QuizteoricorespuestaRecyclerViewAdapter(context, preguntas, mListener);
+            recyclerView.setAdapter(adapterRespuestas);
         }
         return view;
     }
@@ -83,8 +99,8 @@ public class QuizteoricorespuestaFragment extends Fragment {
         if (context instanceof OnListFragmentInteractionListener) {
             mListener = (OnListFragmentInteractionListener) context;
         } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnListFragmentInteractionListener");
+            throw new RuntimeException(context.toString()
+                    + " must implement OnListFragmentInteractionListener");
         }
     }
 
@@ -106,6 +122,89 @@ public class QuizteoricorespuestaFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Pregunta item);
+    }
+
+    public static class GruposActivity extends AppCompatActivity {
+
+        ListView listViewGrupos;
+        List<Grupo> grupos;
+
+        SeguridadServices service;
+        SeguridadClient client;
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_grupos);
+
+            findViews();
+
+            retrofitInit();
+
+            loadGrupos();
+        }
+
+        private void findViews() {
+            listViewGrupos = findViewById(R.id.listViewGrupos);
+        }
+
+        private void retrofitInit() {
+            client = SeguridadClient.getInstance();
+
+            service = client.getService();
+        }
+
+        private void loadGrupos() {
+            String idinstructor;
+
+            idinstructor = SharedPeferencesManager.getSomeStringValue(Constantes.PREF_ID_INSTRUCTOR);
+
+            Call<List<Grupo>> call = service.doGruposactivosevaluacionpractica(idinstructor);
+
+            call.enqueue(new Callback<List<Grupo>>() {
+                @Override
+                public void onResponse(Call<List<Grupo>> call, Response<List<Grupo>> response) {
+                    if (response.isSuccessful()) {
+                        // Toast.makeText(QuizAprendizActivity.this, "Quiz consultado con exito", Toast.LENGTH_SHORT).show();
+
+                        if (response.isSuccessful()) {
+                            grupos = response.body();
+
+                            GrupoAdapter adapter = new GrupoAdapter(GruposActivity.this, grupos);
+
+                            listViewGrupos.setAdapter(adapter);
+
+                            listViewGrupos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+
+
+
+                                    Intent intent = new Intent(GruposActivity.this, AprendicesgrupoActivity.class);
+                                    intent.putExtra("idgrupo", grupos.get(i).getId().toString());
+
+                                    startActivity(intent);
+
+                                    // Toast.makeText(GruposActivity.this, g.getFechainicio(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                            return;
+                        }
+                    } else {
+                        Toast.makeText(GruposActivity.this, "Problemas de conexion 1", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Grupo>> call, Throwable t) {
+                    Log.i("On login", t.getMessage());
+                    Toast.makeText(GruposActivity.this, "Problemas de conexion", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }

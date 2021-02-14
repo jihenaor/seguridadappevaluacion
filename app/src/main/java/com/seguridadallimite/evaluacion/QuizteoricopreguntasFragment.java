@@ -1,11 +1,14 @@
 package com.seguridadallimite.evaluacion;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -15,6 +18,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.android.material.snackbar.Snackbar;
+import com.seguridadallimite.evaluacion.common.Constantes;
+import com.seguridadallimite.evaluacion.common.SharedPeferencesManager;
 import com.seguridadallimite.evaluacion.model.Pregunta;
 import com.seguridadallimite.evaluacion.model.Respuesta;
 import com.seguridadallimite.evaluacion.retrofit.SeguridadClient;
@@ -30,11 +36,15 @@ public class QuizteoricopreguntasFragment extends Fragment   implements  View.On
 
     View view;
     TextView txt_pregunta;
-    Button btn_calificar;
     Button btn_continuar;
-    Button button_xxx;
     RadioGroup radioGroup;
     private TextView txt_contador_pregunta;
+    private TextView txtRespuestasCorrectas;
+    private TextView txtRespuestasIncorrectas;
+
+    private TextView txtPorcentaje;
+    private TextView txtNota;
+
     int contadorPregunta;
     SeguridadServices service;
     SeguridadClient client;
@@ -43,6 +53,9 @@ public class QuizteoricopreguntasFragment extends Fragment   implements  View.On
     private int indice_pregunta;
     private int contadorOK;
     private int contadorError;
+    private int indice;
+    private Boolean termino = Boolean.FALSE;
+    private ProgressBar progressBarAvance;
 
     Comunicador  comunicador;
 
@@ -83,7 +96,9 @@ public class QuizteoricopreguntasFragment extends Fragment   implements  View.On
 
         events();
 
-        btn_continuar.setVisibility(View.GONE);
+        progressBarAvance.setProgress(0);
+
+//        btn_continuar.setVisibility(View.GONE);
 /*
         view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,18 +115,19 @@ public class QuizteoricopreguntasFragment extends Fragment   implements  View.On
     }
 
     private void events() {
-        btn_calificar.setOnClickListener(this);
         btn_continuar.setOnClickListener(this);
-        button_xxx.setOnClickListener(this);
     }
 
     private void findView() {
         txt_pregunta = (TextView) view.findViewById(R.id.txt_pregunta);
         txt_contador_pregunta = (TextView) view.findViewById(R.id.txt_contador_pregunta);
-        btn_calificar = (Button) view.findViewById(R.id.btn_calificar);
         btn_continuar = (Button) view.findViewById(R.id.btn_continuar);
         radioGroup = (RadioGroup) view.findViewById(R.id.radioGroup);
-        button_xxx = (Button) view.findViewById(R.id.button_xxx);
+        txtRespuestasCorrectas =  (TextView) view.findViewById(R.id.txtRespuestasCorrectas);
+        txtRespuestasIncorrectas =  (TextView) view.findViewById(R.id.txtRespuestasIncorrectas);
+        txtPorcentaje =  (TextView) view.findViewById(R.id.txtPorcentaje);
+        txtNota =  (TextView) view.findViewById(R.id.txtNota);
+        progressBarAvance = (ProgressBar) view.findViewById(R.id.progressBarAvance);
     }
 
     private void retrofitInit() {
@@ -129,13 +145,15 @@ public class QuizteoricopreguntasFragment extends Fragment   implements  View.On
                 RadioButton rb = (RadioButton) view.findViewById(ids_respuestas[i++]);
                 rb.setText(respuesta.getRespuesta());
             }
-
         }
         txt_contador_pregunta.setText(indice_pregunta + 1 + " / " + preguntas.size());
+        progressBarAvance.setMax(preguntas.size());
     }
 
     private void findPreguntas() {
-        Call<List<Pregunta>> call = service.doPreguntaniveltipoevaluacion("4", "T");
+        String idaprendiz = SharedPeferencesManager.getSomeStringValue(Constantes.PREF_ID_APRENDIZ);
+
+        Call<List<Pregunta>> call = service.doPreguntasevaluacionaprendiz(idaprendiz);
 
         call.enqueue(new Callback<List<Pregunta>>() {
             @Override
@@ -175,49 +193,101 @@ public class QuizteoricopreguntasFragment extends Fragment   implements  View.On
         }
     }
 
-    private void calificar() {
+    private void ocultarRespuestas() {
+        txt_pregunta.setVisibility(View.GONE);
+        for (int i = 0; i < radioGroup.getChildCount(); i++) {
+            radioGroup.getChildAt(i).setVisibility(View.GONE);
+        }
+    }
 
+    private Boolean seleccionoRespuesta() {
         int id = radioGroup.getCheckedRadioButtonId();
-        int indice = -1;
+        indice = -1;
         for (int i = 0; i < ids_respuestas.length; i++) {
             if (ids_respuestas[i] == id) {
                 indice = i;
+
+                return Boolean.TRUE;
             }
         }
 
-        if (indice == -1) {
-            // Toast.makeText(QuizAprendizActivity.this, "Debe seleccionar una respuesta", Toast.LENGTH_SHORT).show();
-            return;
+        Toast.makeText(getActivity(), "Debe seleccionar una respuesta", Toast.LENGTH_SHORT).show();
+        return Boolean.FALSE;
+    }
+
+    private void calificar(View v) {
+        String msg;
+        btn_continuar.setVisibility(View.GONE);
+        activarRespuestas(false);
+        int color;
+        int textColor;
+        if (preguntaseleccionada.getNumerorespuestacorrecta().intValue() == indice + 1) {
+            preguntaseleccionada.setRespuestacorrecta("S");
+            contadorOK++;
+            msg = "Bien hecho !";
+            color = Color.GREEN;
+            textColor = Color.BLACK;
         } else {
-            activarRespuestas(false);
-            if (preguntaseleccionada.getNumerorespuestacorrecta().intValue() == indice + 1) {
-                preguntaseleccionada.setRespuestacorrecta("S");
-                contadorOK++;
-                // Toast.makeText(QuizAprendizActivity.this, "La respuesta es correcta", Toast.LENGTH_SHORT).show();
-            } else {
-                contadorError++;
-                // Toast.makeText(QuizAprendizActivity.this, "La respuesta no es correcta", Toast.LENGTH_SHORT).show();
-                preguntaseleccionada.setRespuestacorrecta("N");
+            contadorError++;
+            msg = "Debes repasar !";
+            color = Color.RED;
+            textColor = Color.WHITE;
+            preguntaseleccionada.setRespuestacorrecta("N");
+        }
+        final Snackbar make = Snackbar.make(v, msg, Snackbar.LENGTH_INDEFINITE);
+
+        View snackBarView = make.getView();
+        snackBarView.setBackgroundColor(color);
+
+        make.setAction("Continuar", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                make.dismiss();
+                continuar();
+                progressBarAvance.setProgress(indice_pregunta);
+                btn_continuar.setVisibility(View.VISIBLE);
+
+                if (indice_pregunta == preguntas.size() -1) {
+                    btn_continuar.setText("Finalizar");
+                }
+//        btn_continuar.setVisibility(View.VISIBLE);
+                radioGroup.clearCheck();
             }
-        }
-        if (indice_pregunta == preguntas.size() -1) {
-            btn_continuar.setText("Finalizar");
-        }
-        btn_calificar.setVisibility(View.GONE);
-        btn_continuar.setVisibility(View.VISIBLE);
-        radioGroup.clearCheck();
+        });
+
+        TextView textView = snackBarView.findViewById(R.id.snackbar_text);
+        textView.setTextColor(textColor);
+        make.show();
+    }
+
+    private void calcularNotas() {
+        Double nota;
+        Double porcentaje;
+
+        txtRespuestasCorrectas.setText("Respuestas correctas: " + contadorOK);
+        txtRespuestasIncorrectas.setText("Respuestas incorrectas: " + contadorError);
+
+        porcentaje = new Double(new Double(contadorOK) / new Double(preguntas.size())) * 100;
+
+        txtPorcentaje.setText(porcentaje + " %");
+
+        nota = new Double(new Double(contadorOK) / new Double(preguntas.size())) * 5;
+
+        txtNota.setText("Nota: " + nota + ( nota > 3 ? "   Aprobó " : "    Reprobó"));
     }
 
     private void continuar() {
         if (indice_pregunta == preguntas.size() -1) {
+            btn_continuar.setText("TERMINAR");
+            calcularNotas();
 
+            ocultarRespuestas();
         } else {
             if (indice_pregunta <= preguntas.size()) {
                 indice_pregunta ++;
                 activarRespuestas(true);
                 inicializarPregunta();
-                btn_calificar.setVisibility(View.VISIBLE);
-                btn_continuar.setVisibility(View.GONE);
+                btn_continuar.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -227,17 +297,27 @@ public class QuizteoricopreguntasFragment extends Fragment   implements  View.On
         int id = v.getId();
 
         switch (id) {
-            case R.id.btn_calificar:
-                calificar();
-                break;
             case R.id.btn_continuar:
-                continuar();
+                if (termino) {
+                    Intent i = new Intent(getActivity(), MainActivity.class);
+                    startActivity(i);
+
+                    getActivity().finish();
+                } else {
+                    if (seleccionoRespuesta()) {
+                        calificar(v);
+
+                        if (indice_pregunta == preguntas.size() -1) {
+                            termino = Boolean.TRUE;
+                        }
+                    }
+                }
                 break;
-            case R.id.button_xxx:
+                /*
                 NavHostFragment.findNavController(QuizteoricopreguntasFragment.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
                 comunicador.enviar(this.preguntas);
-                break;
+                 */
         }
     }
 

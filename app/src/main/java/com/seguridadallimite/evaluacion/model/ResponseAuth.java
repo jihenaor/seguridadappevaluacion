@@ -6,25 +6,45 @@ import com.google.gson.annotations.SerializedName;
 
 public class ResponseAuth {
 
+    @SerializedName("token")
+    @Expose
+    private String token;
+
+    @SerializedName("role")
+    @Expose
+    private String role;
+
+    @SerializedName("id")
+    @Expose
+    private String id;
+
     @SerializedName("numerodocumento")
     @Expose
     private String numerodocumento;
 
-    @SerializedName("jwt")
+    @SerializedName("nombreusuario")
     @Expose
-    private Object jwt;
+    private String nombreusuario;
+
+    @SerializedName("tienepassword")
+    @Expose
+    private String tienepassword;
 
     @SerializedName("cursoRs")
     @Expose
     private Object cursoRs;
 
-    @SerializedName("perfil")
-    @Expose
-    private String perfil;
-
     @SerializedName("aprendiz")
     @Expose
     private Aprendiz aprendiz;
+
+    @SerializedName("idaprendiz")
+    @Expose
+    private Long idaprendiz;
+
+    @SerializedName("idinstructor")
+    @Expose
+    private String idinstructor;
 
     @SerializedName("personal")
     @Expose
@@ -37,23 +57,28 @@ public class ResponseAuth {
     public ResponseAuth() {
     }
 
-    /**
-     * 
-     * @param cursoRs
-     * @param jwt
-     * @param numerodocumento
-     * @param personal
-     * @param aprendiz
-     * @param perfil
-     */
-    public ResponseAuth(String numerodocumento, Object jwt, Object cursoRs, String perfil, Aprendiz aprendiz, Personal personal) {
-        super();
-        this.numerodocumento = numerodocumento;
-        this.jwt = jwt;
-        this.cursoRs = cursoRs;
-        this.perfil = perfil;
-        this.aprendiz = aprendiz;
-        this.personal = personal;
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNumerodocumento() {
@@ -64,12 +89,20 @@ public class ResponseAuth {
         this.numerodocumento = numerodocumento;
     }
 
-    public Object getJwt() {
-        return jwt;
+    public String getNombreusuario() {
+        return nombreusuario;
     }
 
-    public void setJwt(Object jwt) {
-        this.jwt = jwt;
+    public void setNombreusuario(String nombreusuario) {
+        this.nombreusuario = nombreusuario;
+    }
+
+    public String getTienepassword() {
+        return tienepassword;
+    }
+
+    public void setTienepassword(String tienepassword) {
+        this.tienepassword = tienepassword;
     }
 
     public Object getCursoRs() {
@@ -78,14 +111,6 @@ public class ResponseAuth {
 
     public void setCursoRs(Object cursoRs) {
         this.cursoRs = cursoRs;
-    }
-
-    public String getPerfil() {
-        return perfil;
-    }
-
-    public void setPerfil(String perfil) {
-        this.perfil = perfil;
     }
 
     public Aprendiz getAprendiz() {
@@ -104,4 +129,15 @@ public class ResponseAuth {
         this.personal = personal;
     }
 
+    public Long getIdaprendiz() {
+        return idaprendiz;
+    }
+
+    public void setIdaprendiz(Long idaprendiz) {
+        this.idaprendiz = idaprendiz;
+    }
+
+    public String getIdinstructor() {
+        return idinstructor;
+    }
 }

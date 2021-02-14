@@ -10,15 +10,19 @@ public class Pregunta {
     @SerializedName("id")
     @Expose
     private Integer id;
+
     @SerializedName("pregunta")
     @Expose
     private String pregunta;
+
     @SerializedName("numerorespuestacorrecta")
     @Expose
     private Integer numerorespuestacorrecta;
+
     @SerializedName("orden")
     @Expose
     private Integer orden;
+
     @SerializedName("grupo")
     @Expose
     private Grupo grupo;
@@ -34,6 +38,7 @@ public class Pregunta {
     @SerializedName("idnivel")
     @Expose
     private Integer idnivel;
+
     @SerializedName("respuestas")
     @Expose
     private List<Respuesta> respuestas = null;

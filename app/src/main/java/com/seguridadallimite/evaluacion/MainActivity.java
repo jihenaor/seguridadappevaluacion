@@ -4,12 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.seguridadallimite.evaluacion.R;
 import com.seguridadallimite.evaluacion.common.Constantes;
 import com.seguridadallimite.evaluacion.common.SharedPeferencesManager;
 import com.seguridadallimite.evaluacion.model.RequestAuth;
@@ -44,13 +44,13 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         service = client.getService();
     }
 
-    private void events() {
-        btn_login.setOnClickListener(this);
-    }
-
     private void findViews() {
         btn_login = findViewById(R.id.btn_login);
         txt_numerodocumento = findViewById(R.id.txt_numerodocumento);
+    }
+
+    private void events() {
+        btn_login.setOnClickListener(this);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
 
         RequestAuth requestAuth = new RequestAuth();
 
-        requestAuth.setNumerodocumento(documento);
+        requestAuth.setUsername(documento);
 
         Call<ResponseAuth> call = service.doLogin(requestAuth);
 
@@ -85,13 +85,23 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
                     Toast.makeText(MainActivity.this, "Sesión iniciada correctamente", Toast.LENGTH_SHORT).show();
 
                     SharedPeferencesManager.setSomeStringValue(Constantes.PREF_NUMERO_DOCUMENTO, documento);
-                    SharedPeferencesManager.setSomeStringValue(Constantes.PREF_PERFIL, response.body().getPerfil());
-                    if (response.body().getPerfil().equals("A")) {
-                        SharedPeferencesManager.setSomeStringValue(Constantes.PREF_NOMBRE_APRENDIZ, response.body().getAprendiz().getTrabajador().getPrimernombre());
+                    SharedPeferencesManager.setSomeStringValue(Constantes.PREF_PERFIL, response.body().getRole());
+                    if (response.body().getRole().equals("T")) {
+                        SharedPeferencesManager.setSomeStringValue(Constantes.PREF_NOMBRE_APRENDIZ, response.body().getNombreusuario());
+                        SharedPeferencesManager.setSomeStringValue(Constantes.PREF_ID_APRENDIZ, response.body().getIdaprendiz().toString());
+
+                        Intent i = new Intent(MainActivity.this, DashboardActivity.class);
+                        startActivity(i);
+                    } else {
+                        SharedPeferencesManager.setSomeStringValue(Constantes.PREF_NOMBRE_INSTRUCTOR, response.body().getNombreusuario());
+                        SharedPeferencesManager.setSomeStringValue(Constantes.PREF_ID_INSTRUCTOR, response.body().getId());
+
+                        Intent i = new Intent(MainActivity.this, QuizteoricorespuestaFragment.GruposActivity.class);
+                        i.putExtra("idinstructor", response.body().getIdinstructor());
+                        startActivity(i);
                     }
 
-                    Intent i = new Intent(MainActivity.this, DashboardActivity.class);
-                    startActivity(i);
+
                     // Destruir activity login
                     finish();
                 } else {
@@ -101,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
 
             @Override
             public void onFailure(Call<ResponseAuth> call, Throwable t) {
+                Log.i("On login", t.getMessage());
                 Toast.makeText(MainActivity.this, "Problemas de conexion", Toast.LENGTH_SHORT).show();
             }
         });

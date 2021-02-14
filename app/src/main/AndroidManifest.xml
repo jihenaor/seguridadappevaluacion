@@ -3,6 +3,9 @@
     package="com.seguridadallimite.evaluacion">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".common.MyApp"
@@ -11,11 +14,19 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ui.evaluacionpractica.EvaluacionpracticaActivity"
+            android:label="@string/title_activity_evaluacionpractica"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ui.aprendicesgrupo.AprendicesgrupoActivity" />
+        <activity android:name=".QuizteoricorespuestaFragment$GruposActivity" />
+        <activity android:name=".GruposinstructorActivity" />
         <activity
             android:name=".QuizTeoricoActivity"
             android:label="@string/title_activity_quizteorico"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".QuizAprendizActivity" />
         <activity
             android:name=".DashboardActivity"

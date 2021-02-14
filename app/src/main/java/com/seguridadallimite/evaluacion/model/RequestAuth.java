@@ -6,9 +6,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class RequestAuth {
 
-    @SerializedName("numerodocumento")
+    @SerializedName("username")
     @Expose
-    private String numerodocumento;
+    private String username;
+
+    @SerializedName("password")
+    @Expose
+    private String password;
 
     /**
      * No args constructor for use in serialization
@@ -19,19 +23,27 @@ public class RequestAuth {
 
     /**
      * 
-     * @param numerodocumento
+     * @param username
      */
-    public RequestAuth(String numerodocumento) {
+    public RequestAuth(String username, String password) {
         super();
-        this.numerodocumento = numerodocumento;
+        this.username = username;
+        this.password = password;
     }
 
-    public String getNumerodocumento() {
-        return numerodocumento;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNumerodocumento(String numerodocumento) {
-        this.numerodocumento = numerodocumento;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

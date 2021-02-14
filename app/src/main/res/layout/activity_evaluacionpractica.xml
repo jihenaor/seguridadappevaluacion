@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.evaluacionpractica.EvaluacionpracticaActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_evaluacionpractica"
+        tools:layout_editor_absoluteX="-72dp"
+        tools:layout_editor_absoluteY="-33dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabProcedimientotrabajoseguroalturas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:backgroundTint="@android:color/holo_orange_dark"
+        app:layout_constraintBottom_toTopOf="@+id/fabTecnicasrescate"
+        app:layout_constraintEnd_toEndOf="@+id/fabNudos"
+        app:srcCompat="@android:drawable/ic_menu_manage" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_add" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/appBarLayout2"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabNudos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:backgroundTint="@android:color/holo_orange_light"
+        app:layout_constraintBottom_toTopOf="@+id/fab"
+        app:layout_constraintEnd_toEndOf="@+id/fab"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabReconocimientoEquipos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:backgroundTint="@android:color/holo_orange_dark"
+        app:layout_constraintBottom_toTopOf="@+id/fabNudos"
+        app:layout_constraintEnd_toEndOf="@+id/fabNudos"
+        app:srcCompat="@android:drawable/ic_menu_manage" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabTecnicastrabajoalturas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:backgroundTint="@android:color/holo_orange_dark"
+        app:layout_constraintBottom_toTopOf="@+id/fabReconocimientoEquipos"
+        app:layout_constraintEnd_toEndOf="@+id/fabNudos"
+        app:srcCompat="@android:drawable/ic_menu_manage" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabTecnicasrescate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:backgroundTint="@android:color/holo_orange_dark"
+        app:layout_constraintBottom_toTopOf="@+id/fabTecnicastrabajoalturas"
+        app:layout_constraintEnd_toEndOf="@+id/fabNudos"
+        app:srcCompat="@android:drawable/ic_menu_manage" />
+
+    <EditText
+        android:id="@+id/editTextNudos"
+        android:layout_width="259dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Nudos"
+        android:textAlignment="textEnd"
+        app:layout_constraintBottom_toBottomOf="@+id/fabNudos"
+        app:layout_constraintEnd_toStartOf="@+id/fabNudos"
+        app:layout_constraintTop_toTopOf="@+id/fabNudos" />
+
+    <EditText
+        android:id="@+id/editTextReconocimientoEquipos"
+        android:layout_width="259dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Reconocimiento de equipos"
+        android:textAlignment="textEnd"
+        app:layout_constraintBottom_toBottomOf="@+id/fabReconocimientoEquipos"
+        app:layout_constraintEnd_toStartOf="@+id/fabReconocimientoEquipos"
+        app:layout_constraintTop_toTopOf="@+id/fabReconocimientoEquipos" />
+
+    <EditText
+        android:id="@+id/editTextTecnicatrabajoalturas"
+        android:layout_width="259dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Tecnica trabajo en alturas"
+        android:textAlignment="textEnd"
+        app:layout_constraintBottom_toBottomOf="@+id/fabTecnicastrabajoalturas"
+        app:layout_constraintEnd_toStartOf="@+id/fabTecnicastrabajoalturas"
+        app:layout_constraintTop_toTopOf="@+id/fabTecnicastrabajoalturas"/>
+
+    <EditText
+        android:id="@+id/editTextTecnicasrescate"
+        android:layout_width="259dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Técnicas de rescate"
+        android:textAlignment="textEnd"
+        app:layout_constraintBottom_toBottomOf="@+id/fabTecnicasrescate"
+        app:layout_constraintEnd_toStartOf="@+id/fabTecnicasrescate"
+        app:layout_constraintTop_toTopOf="@+id/fabTecnicasrescate"
+        />
+
+    <EditText
+        android:id="@+id/editTextProcedimientotrabajoalturas"
+        android:layout_width="259dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Procedimientos para trabajo seguro en alturas"
+        android:textAlignment="textEnd"
+        app:layout_constraintBottom_toBottomOf="@+id/fabProcedimientotrabajoseguroalturas"
+        app:layout_constraintEnd_toStartOf="@+id/fabProcedimientotrabajoseguroalturas"
+        app:layout_constraintTop_toTopOf="@+id/fabProcedimientotrabajoseguroalturas"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

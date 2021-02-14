@@ -8,22 +8,19 @@ public class Grupo {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
-    @SerializedName("nombre")
+    private Long id;
+
+    @SerializedName("idnivel")
     @Expose
-    private String nombre;
-    @SerializedName("tipoevaluacion")
+    private Long idnivel;
+
+    @SerializedName("fechainicio")
     @Expose
-    private String tipoevaluacion;
-    @SerializedName("orden")
+    private String fechainicio;
+
+    @SerializedName("fechafinal")
     @Expose
-    private Integer orden;
-    @SerializedName("idprograma")
-    @Expose
-    private Integer idprograma;
-    @SerializedName("preguntas")
-    @Expose
-    private Object preguntas;
+    private String fechafinal;
 
     /**
      * No args constructor for use in serialization
@@ -32,71 +29,42 @@ public class Grupo {
     public Grupo() {
     }
 
-    /**
-     * 
-     * @param tipoevaluacion
-     * @param idprograma
-     * @param preguntas
-     * @param id
-     * @param orden
-     * @param nombre
-     */
-    public Grupo(Integer id, String nombre, String tipoevaluacion, Integer orden, Integer idprograma, Object preguntas) {
-        super();
+    public Grupo(Long id, Long idnivel, String fechainicio, String fechafinal) {
         this.id = id;
-        this.nombre = nombre;
-        this.tipoevaluacion = tipoevaluacion;
-        this.orden = orden;
-        this.idprograma = idprograma;
-        this.preguntas = preguntas;
+        this.idnivel = idnivel;
+        this.fechainicio = fechainicio;
+        this.fechafinal = fechafinal;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public Long getIdnivel() {
+        return idnivel;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setIdnivel(Long idnivel) {
+        this.idnivel = idnivel;
     }
 
-    public String getTipoevaluacion() {
-        return tipoevaluacion;
+    public String getFechainicio() {
+        return fechainicio;
     }
 
-    public void setTipoevaluacion(String tipoevaluacion) {
-        this.tipoevaluacion = tipoevaluacion;
+    public void setFechainicio(String fechainicio) {
+        this.fechainicio = fechainicio;
     }
 
-    public Integer getOrden() {
-        return orden;
+    public String getFechafinal() {
+        return fechafinal;
     }
 
-    public void setOrden(Integer orden) {
-        this.orden = orden;
+    public void setFechafinal(String fechafinal) {
+        this.fechafinal = fechafinal;
     }
-
-    public Integer getIdprograma() {
-        return idprograma;
-    }
-
-    public void setIdprograma(Integer idprograma) {
-        this.idprograma = idprograma;
-    }
-
-    public Object getPreguntas() {
-        return preguntas;
-    }
-
-    public void setPreguntas(Object preguntas) {
-        this.preguntas = preguntas;
-    }
-
 }

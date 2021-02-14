@@ -9,7 +9,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewRespuestaincorrecta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -26,15 +26,15 @@
         android:ems="10"
         android:hint="@string/hint_numerodocumento"
         android:inputType="textPersonName"
-        android:text="75068189"
+        android:text="1096037927"
         android:textColor="@android:color/white"
         android:textColorHighlight="@color/colorAzulOscuro"
         android:textColorHint="@color/colorAzulOscuro"
         android:textColorLink="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/txt_contraseña"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewRespuestaincorrecta"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        tools:text="75068189" />
+        tools:text="1096037927" />
 
     <EditText
         android:id="@+id/txt_contraseña"
@@ -74,8 +74,8 @@
         android:text="@string/text_logo"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/txt_numerodocumento"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintEnd_toEndOf="@+id/imageViewRespuestaincorrecta"
+        app:layout_constraintStart_toStartOf="@+id/imageViewRespuestaincorrecta"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewRespuestaincorrecta" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

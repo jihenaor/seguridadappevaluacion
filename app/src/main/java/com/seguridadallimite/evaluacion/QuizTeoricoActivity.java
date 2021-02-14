@@ -2,21 +2,14 @@ package com.seguridadallimite.evaluacion;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.seguridadallimite.evaluacion.model.Pregunta;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
-import android.util.Log;
-import android.view.View;
 
 import java.util.List;
 
-public class QuizTeoricoActivity extends AppCompatActivity implements QuizteoricopreguntasFragment.Comunicador {
+public class QuizTeoricoActivity extends AppCompatActivity implements QuizteoricopreguntasFragment.Comunicador, QuizteoricorespuestaFragment.OnListFragmentInteractionListener {
 
     private List<Pregunta> preguntas;
 
@@ -26,7 +19,6 @@ public class QuizTeoricoActivity extends AppCompatActivity implements Quizteoric
         setContentView(R.layout.activity_quizteorico);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
     }
 
     @Override
@@ -40,5 +32,14 @@ public class QuizTeoricoActivity extends AppCompatActivity implements Quizteoric
 
     public void setPreguntas(List<Pregunta> preguntas) {
         this.preguntas = preguntas;
+    }
+
+    @Override
+    public void onListFragmentInteraction(Pregunta item) {
+
+    }
+
+    private void getQuestionList() {
+
     }
 }

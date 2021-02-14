@@ -107,7 +107,9 @@ public class QuizAprendizActivity extends AppCompatActivity  implements  View.On
     }
 
     private void findPreguntas() {
-        Call<List<Pregunta>> call = service.doPreguntaniveltipoevaluacion("4", "T");
+        String idaprendiz = SharedPeferencesManager.getSomeStringValue(Constantes.PREF_ID_APRENDIZ);
+
+        Call<List<Pregunta>> call = service.doPreguntasevaluacionaprendiz(idaprendiz);
 
         call.enqueue(new Callback<List<Pregunta>>() {
             @Override

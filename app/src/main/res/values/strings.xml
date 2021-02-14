@@ -37,4 +37,5 @@
     <string name="quiz_texto3">Debe aprobar el 80% de las preguntas</string>
     <string name="quiz_boton_iniciar_ecamen">Iniciar examen</string>
     <string name="title_activity_quizteorico">Quizteorico</string>
+    <string name="title_activity_evaluacionpractica">EvaluacionpracticaActivity</string>
 </resources>
