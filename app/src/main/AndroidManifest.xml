@@ -22,7 +22,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".ui.aprendicesgrupo.AprendicesgrupoActivity" />
         <activity android:name=".QuizteoricorespuestaFragment$GruposActivity" />
-        <activity android:name=".GruposinstructorActivity" />
+        <activity android:name=".grupos.GruposinstructorActivity" />
         <activity
             android:name=".QuizTeoricoActivity"
             android:label="@string/title_activity_quizteorico"

@@ -74,7 +74,7 @@ public class AprendicesgrupoActivity extends AppCompatActivity {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                 Intent intent = new Intent(AprendicesgrupoActivity.this, EvaluacionpracticaActivity.class);
-                                intent.putExtra("idgrupo", viaprendizs.get(i).getIdaprendiz().toString());
+                                intent.putExtra("idaprendiz", viaprendizs.get(i).getIdaprendiz().toString());
 
                                 startActivity(intent);
 

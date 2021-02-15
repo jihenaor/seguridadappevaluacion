@@ -4,6 +4,7 @@ import com.seguridadallimite.evaluacion.model.Grupo;
 import com.seguridadallimite.evaluacion.model.Pregunta;
 import com.seguridadallimite.evaluacion.model.RequestAuth;
 import com.seguridadallimite.evaluacion.model.ResponseAuth;
+import com.seguridadallimite.evaluacion.model.RespuestaWs;
 import com.seguridadallimite.evaluacion.model.Viaprendiz;
 
 import java.util.List;
@@ -28,5 +29,10 @@ public interface SeguridadServices {
     @GET("aprendizgrupoevaluacion/{idgrupo}")
     Call<List<Viaprendiz>> doAprendizgrupoevaluacion(@Path("idgrupo") String idgrupo);
 
+    @GET("evaluacionpracticamovil/{idaprendiz}")
+    Call<List<Pregunta>> doEvaluacionpracticamovil(@Path("idaprendiz") String idaprendiz);
+
+    @POST("saveevaluacionpracticamovil")
+    Call<RespuestaWs> doSaveevaluacionpracticamovil(@Body List<Pregunta> requestAuth);
 
 }

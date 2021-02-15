@@ -25,11 +25,11 @@ public class Pregunta {
 
     @SerializedName("grupo")
     @Expose
-    private Grupo grupo;
+    private Grupopregunta grupo;
 
     @SerializedName("idenfasis")
     @Expose
-    private Object idenfasis;
+    private Enfasis idenfasis;
 
     @SerializedName("respuestacorrecta")
     @Expose
@@ -42,6 +42,14 @@ public class Pregunta {
     @SerializedName("respuestas")
     @Expose
     private List<Respuesta> respuestas = null;
+
+    @SerializedName("idrespuesta")
+    @Expose
+    private Integer idrespuesta;
+
+    @SerializedName("idevaluacion")
+    @Expose
+    private Long idevaluacion;
 
     /**
      * No args constructor for use in serialization
@@ -62,7 +70,9 @@ public class Pregunta {
      * @param pregunta
      * @param respuestacorrecta
      */
-    public Pregunta(Integer id, String pregunta, Integer numerorespuestacorrecta, Integer orden, Grupo grupo, Object idenfasis, Integer idnivel, List<Respuesta> respuestas, String respuestacorrecta) {
+    public Pregunta(Integer id, String pregunta, Integer numerorespuestacorrecta,
+                    Integer orden, Grupopregunta grupo, Enfasis idenfasis, Integer idnivel,
+                    List<Respuesta> respuestas, String respuestacorrecta) {
         super();
         this.id = id;
         this.pregunta = pregunta;
@@ -107,19 +117,15 @@ public class Pregunta {
         this.orden = orden;
     }
 
-    public Grupo getGrupo() {
+    public Grupopregunta getGrupo() {
         return grupo;
     }
 
-    public void setGrupo(Grupo grupo) {
-        this.grupo = grupo;
-    }
-
-    public Object getIdenfasis() {
+    public Enfasis getIdenfasis() {
         return idenfasis;
     }
 
-    public void setIdenfasis(Object idenfasis) {
+    public void setIdenfasis(Enfasis idenfasis) {
         this.idenfasis = idenfasis;
     }
 
@@ -145,5 +151,13 @@ public class Pregunta {
 
     public void setRespuestacorrecta(String respuestacorrecta) {
         this.respuestacorrecta = respuestacorrecta;
+    }
+
+    public Long getIdevaluacion() {
+        return idevaluacion;
+    }
+
+    public void setIdevaluacion(Long idevaluacion) {
+        this.idevaluacion = idevaluacion;
     }
 }

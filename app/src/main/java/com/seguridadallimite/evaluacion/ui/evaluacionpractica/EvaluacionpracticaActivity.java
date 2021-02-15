@@ -1,5 +1,6 @@
 package com.seguridadallimite.evaluacion.ui.evaluacionpractica;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -8,14 +9,35 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.seguridadallimite.evaluacion.R;
+import com.seguridadallimite.evaluacion.model.Pregunta;
+import com.seguridadallimite.evaluacion.model.Respuesta;
+import com.seguridadallimite.evaluacion.model.RespuestaWs;
+import com.seguridadallimite.evaluacion.model.Viaprendiz;
+import com.seguridadallimite.evaluacion.retrofit.SeguridadClient;
+import com.seguridadallimite.evaluacion.retrofit.SeguridadServices;
+import com.seguridadallimite.evaluacion.ui.aprendicesgrupo.AprendicesgrupoActivity;
+import com.seguridadallimite.evaluacion.ui.aprendicesgrupo.ViaprendizAdapter;
 
-public class EvaluacionpracticaActivity extends AppCompatActivity implements  View.OnClickListener{
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class EvaluacionpracticaActivity extends AppCompatActivity implements  View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private Boolean isOpen = false;
     private FloatingActionButton fab;
@@ -25,13 +47,22 @@ public class EvaluacionpracticaActivity extends AppCompatActivity implements  Vi
     private FloatingActionButton fabTecnicasrescate;
     private FloatingActionButton fabProcedimientotrabajoseguroalturas;
 
-    private EditText editTextNudos;
-    private EditText editTextReconocimientoEquipos;
-    private EditText editTextTecnicastrabajoalturas;
-    private EditText editTextTecnicasrescate;
-    private EditText editTextProcedimientotrabajoseguroalturas;
+    private TextView editTextNudos;
+    private TextView editTextReconocimientoEquipos;
+    private TextView editTextTecnicastrabajoalturas;
+    private TextView editTextTecnicasrescate;
+    private TextView editTextProcedimientotrabajoseguroalturas;
+
+    private Button buttonActualizarevaluacionPractica;
 
     private String idaprendiz;
+
+    SeguridadServices service;
+    SeguridadClient client;
+
+    private List<Pregunta> preguntas;
+
+    private ListView listViewPreguntas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +75,10 @@ public class EvaluacionpracticaActivity extends AppCompatActivity implements  Vi
 
         findViews();
         events();
+
+        retrofitInit();
+
+        loadPreguntas();
     }
 
     private void findViews() {
@@ -59,6 +94,10 @@ public class EvaluacionpracticaActivity extends AppCompatActivity implements  Vi
         editTextTecnicastrabajoalturas = findViewById(R.id.editTextTecnicatrabajoalturas);
         editTextTecnicasrescate = findViewById(R.id.editTextTecnicasrescate);
         editTextProcedimientotrabajoseguroalturas = findViewById(R.id.editTextProcedimientotrabajoalturas);
+
+        listViewPreguntas = findViewById(R.id.listViewPreguntaevaluacionpractica);
+
+        buttonActualizarevaluacionPractica = findViewById(R.id.buttonActualizarevaluacionPractica);
 
         hacervisibleBotones(View.GONE);
 
@@ -94,36 +133,80 @@ public class EvaluacionpracticaActivity extends AppCompatActivity implements  Vi
                     fabNudos.setClickable(true);
                     fabReconocimientoequipos.setClickable(true);
                 }
+                isOpen = !isOpen;
+            }
+        });
 
+        buttonActualizarevaluacionPractica.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveEvaluacion();
             }
         });
 
         fabNudos.setOnClickListener(this);
+        fabReconocimientoequipos.setOnClickListener(this);
+        fabProcedimientotrabajoseguroalturas.setOnClickListener(this);
+        fabTecnicasrescate.setOnClickListener(this);
+        fabTecnicastrabajoalturas.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         int id = v.getId();
-
+        int grupo = 0;
         switch (id) {
             case R.id.fabNudos:
                 hacervisibleBotones(View.GONE);
+                grupo = 3;
                 break;
             case R.id.fabReconocimientoEquipos:
                 hacervisibleBotones(View.GONE);
+                grupo = 4;
                 break;
             case R.id.fabTecnicastrabajoalturas:
                 hacervisibleBotones(View.GONE);
+                grupo = 5;
                 break;
             case R.id.fabTecnicasrescate:
                 hacervisibleBotones(View.GONE);
+                grupo = 6;
                 break;
             case R.id.fabProcedimientotrabajoseguroalturas:
                 hacervisibleBotones(View.GONE);
+                grupo = 7;
                 break;
         }
 
+
+        for (int i = 0; i < preguntas.size(); i++) {
+            final View vx = (View) listViewPreguntas.getChildAt(i);
+            if (vx != null) {
+                try {
+                    if (preguntas.get(i).getGrupo().getId() == grupo) {
+                        vx.setBackgroundColor(0xFF00FF00);
+                    } else {
+                        vx.setBackgroundColor(0xFFFFFF);
+                    }
+                } catch (Exception e) {
+
+                }
+            }
+        }
+
+
+
+
         isOpen = !isOpen;
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+            // do something when check is selected
+        } else {
+            //do something when unchecked
+        }
     }
 
     private void hacervisibleBotones(int visible) {
@@ -138,5 +221,90 @@ public class EvaluacionpracticaActivity extends AppCompatActivity implements  Vi
         editTextTecnicastrabajoalturas.setVisibility(visible);
         editTextTecnicasrescate.setVisibility(visible);
         editTextProcedimientotrabajoseguroalturas.setVisibility(visible);
+        if (visible == View.GONE) {
+            listViewPreguntas.setVisibility(View.VISIBLE);
+        } else {
+            listViewPreguntas.setVisibility(View.GONE);
+        }
+
+    }
+
+    private void retrofitInit() {
+        client = SeguridadClient.getInstance();
+
+        service = client.getService();
+    }
+
+    private void loadPreguntas() {
+        Call<List<Pregunta>> call = service.doEvaluacionpracticamovil(idaprendiz);
+
+        call.enqueue(new Callback<List<Pregunta>>() {
+            @Override
+            public void onResponse(Call<List<Pregunta>> call, Response<List<Pregunta>> response) {
+                if (response.isSuccessful()) {
+                    // Toast.makeText(QuizAprendizActivity.this, "Quiz consultado con exito", Toast.LENGTH_SHORT).show();
+
+                    if (response.isSuccessful()) {
+                        preguntas = response.body();
+
+                        PreguntaAdapter adapter = new PreguntaAdapter(EvaluacionpracticaActivity.this, preguntas);
+
+                        listViewPreguntas.setAdapter(adapter);
+/*
+                        listViewPreguntas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                // Intent intent = new Intent(AprendicesgrupoActivity.this, EvaluacionpracticaActivity.class);
+                                // intent.putExtra("idaprendiz", viaprendizs.get(i).getIdaprendiz().toString());
+
+                                // startActivity(intent);
+
+                                // Toast.makeText(AprendicesgrupoActivity.this, viaprendizs.get(i).getNombreaprendiz(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+*/
+                        return;
+                    }
+                } else {
+                    Toast.makeText(EvaluacionpracticaActivity.this, "Problemas de conexion 1", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Pregunta>> call, Throwable t) {
+                Log.i("On login", t.getMessage());
+                Toast.makeText(EvaluacionpracticaActivity.this, "Problemas de conexion", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void saveEvaluacion() {
+        Call<RespuestaWs> call = service.doSaveevaluacionpracticamovil(preguntas);
+
+        call.enqueue(new Callback<RespuestaWs>() {
+            @Override
+            public void onResponse(Call<RespuestaWs> call, Response<RespuestaWs> response) {
+                if (response.isSuccessful()) {
+                    // Toast.makeText(QuizAprendizActivity.this, "Quiz consultado con exito", Toast.LENGTH_SHORT).show();
+
+                    if (response.isSuccessful()) {
+                        RespuestaWs r = response.body();
+
+                        Toast.makeText(EvaluacionpracticaActivity.this, r.getMsg(), Toast.LENGTH_SHORT).show();
+
+                        return;
+                    }
+                } else {
+                    Toast.makeText(EvaluacionpracticaActivity.this, "Problemas de conexion 1", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaWs> call, Throwable t) {
+                Log.i("On login", t.getMessage());
+                Toast.makeText(EvaluacionpracticaActivity.this, "Problemas de conexion", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
