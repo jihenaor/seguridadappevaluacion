@@ -31,6 +31,7 @@ import com.seguridadallimite.evaluacion.retrofit.SeguridadServices;
 import com.seguridadallimite.evaluacion.ui.aprendicesgrupo.AprendicesgrupoActivity;
 import com.seguridadallimite.evaluacion.ui.aprendicesgrupo.ViaprendizAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -59,6 +60,8 @@ public class EvaluacionpracticaActivity extends AppCompatActivity implements  Vi
 
     SeguridadServices service;
     SeguridadClient client;
+
+    private List<Pregunta> preguntasOriginal;
 
     private List<Pregunta> preguntas;
 
@@ -122,6 +125,8 @@ public class EvaluacionpracticaActivity extends AppCompatActivity implements  Vi
 
                     fabNudos.setClickable(false);
                     fabReconocimientoequipos.setClickable(false);
+
+                    inicializarAdapter();
                 } else {
                     //textview_mail.setVisibility(View.VISIBLE);
                     //textview_share.setVisibility(View.VISIBLE);
@@ -177,25 +182,17 @@ public class EvaluacionpracticaActivity extends AppCompatActivity implements  Vi
                 grupo = 7;
                 break;
         }
+        preguntas = new ArrayList();
 
-
-        for (int i = 0; i < preguntas.size(); i++) {
-            final View vx = (View) listViewPreguntas.getChildAt(i);
-            if (vx != null) {
-                try {
-                    if (preguntas.get(i).getGrupo().getId() == grupo) {
-                        vx.setBackgroundColor(0xFF00FF00);
-                    } else {
-                        vx.setBackgroundColor(0xFFFFFF);
-                    }
-                } catch (Exception e) {
-
-                }
+        for (Pregunta pregunta: preguntasOriginal) {
+            if (pregunta.getGrupo().getId() == grupo) {
+                preguntas.add(pregunta);
             }
         }
 
+        PreguntaAdapter adapter = new PreguntaAdapter(EvaluacionpracticaActivity.this, preguntas);
 
-
+        listViewPreguntas.setAdapter(adapter);
 
         isOpen = !isOpen;
     }
@@ -235,6 +232,17 @@ public class EvaluacionpracticaActivity extends AppCompatActivity implements  Vi
         service = client.getService();
     }
 
+    private void inicializarAdapter() {
+        preguntas = new ArrayList();
+
+        for (Pregunta pregunta: preguntasOriginal) {
+            preguntas.add(pregunta);
+        }
+
+        PreguntaAdapter adapter = new PreguntaAdapter(EvaluacionpracticaActivity.this, preguntas);
+
+        listViewPreguntas.setAdapter(adapter);
+    }
     private void loadPreguntas() {
         Call<List<Pregunta>> call = service.doEvaluacionpracticamovil(idaprendiz);
 
@@ -245,24 +253,10 @@ public class EvaluacionpracticaActivity extends AppCompatActivity implements  Vi
                     // Toast.makeText(QuizAprendizActivity.this, "Quiz consultado con exito", Toast.LENGTH_SHORT).show();
 
                     if (response.isSuccessful()) {
-                        preguntas = response.body();
+                        preguntasOriginal = response.body();
 
-                        PreguntaAdapter adapter = new PreguntaAdapter(EvaluacionpracticaActivity.this, preguntas);
+                        inicializarAdapter();
 
-                        listViewPreguntas.setAdapter(adapter);
-/*
-                        listViewPreguntas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                // Intent intent = new Intent(AprendicesgrupoActivity.this, EvaluacionpracticaActivity.class);
-                                // intent.putExtra("idaprendiz", viaprendizs.get(i).getIdaprendiz().toString());
-
-                                // startActivity(intent);
-
-                                // Toast.makeText(AprendicesgrupoActivity.this, viaprendizs.get(i).getNombreaprendiz(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-*/
                         return;
                     }
                 } else {
